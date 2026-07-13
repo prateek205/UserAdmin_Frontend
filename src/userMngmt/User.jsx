@@ -42,8 +42,6 @@ const User = () => {
 
   return (
     <section className="p-6 bg-gray-100 min-h-screen">
-      {/* Header */}
-
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">User Management</h1>
@@ -58,8 +56,6 @@ const User = () => {
         </button>
       </div>
 
-      {/* Search */}
-
       <div className="bg-white rounded-xl shadow-sm p-4 mb-5">
         <div className="relative max-w-md">
           <FaSearch className="absolute top-4 left-4 text-gray-400" />
@@ -70,8 +66,6 @@ const User = () => {
           />
         </div>
       </div>
-
-      {/* Table */}
 
       <div className="bg-white rounded-xl shadow overflow-hidden">
         <div className="overflow-x-auto">
