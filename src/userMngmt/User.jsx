@@ -52,10 +52,9 @@ const User = () => {
 
         <button
           onClick={() => handleOpen(true)}
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg transition"
+          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-full transition"
         >
           <FaPlus />
-          Add User
         </button>
       </div>
 
