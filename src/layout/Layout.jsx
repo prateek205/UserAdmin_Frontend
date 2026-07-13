@@ -8,7 +8,7 @@ const Layout = () => {
     <div className="flex h-screen bg-gray-100 overflow-hidden">
 
       {/* Sidebar */}
-      <aside className="w-72 bg-slate-900 text-white shadow-xl">
+      <aside className="flex">
         <Sidebar />
       </aside>
 

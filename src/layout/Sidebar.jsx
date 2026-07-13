@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaHome,
   FaUsers,
@@ -6,6 +6,8 @@ import {
   FaShoppingCart,
   FaCog,
   FaSignOutAlt,
+  FaTimes,
+  FaBars,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -15,33 +17,57 @@ const menus = [
 ];
 
 const Sidebar = () => {
+  const [open, setOpen] = useState(true);
+
   return (
-    <div className="h-full flex flex-col">
-      <div className="h-20 flex items-center justify-center border-b border-slate-700">
-        <h1 className="text-2xl font-bold tracking-wide">Admin Panel</h1>
+    <div
+      className={`${
+        open ? "w-64" : "w-20"
+      } h-screen bg-slate-900 text-white duration-300 flex flex-col`}
+    >
+      {/* Header */}
+      <div className="h-20 flex items-center justify-between px-5 border-b border-slate-700">
+        {open && (
+          <h1 className="text-xl font-bold whitespace-nowrap">Admin Panel</h1>
+        )}
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-2xl hover:text-indigo-400"
+        >
+          {open ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
 
-      <div className="flex-1 p-4 space-y-2">
+      <div className="flex-1 p-3 space-y-2">
         {menus.map((menu) => (
           <NavLink
             key={menu.name}
             to={menu.path}
             className={({ isActive }) =>
-              `flex items-center gap-4 px-4 py-3 rounded-lg transition-all ${
+              `flex items-center ${
+                open ? "justify-start gap-4 px-4" : "justify-center"
+              } py-3 rounded-lg transition-all ${
                 isActive ? "bg-indigo-600 text-white" : "hover:bg-slate-800"
               }`
             }
           >
-            {menu.icon}
-            <span>{menu.name}</span>
+            <span className="text-xl">{menu.icon}</span>
+
+            {open && <span>{menu.name}</span>}
           </NavLink>
         ))}
       </div>
 
-      <div className="p-4 border-t border-slate-700">
-        <button className="flex items-center gap-3 w-full justify-center bg-red-500 hover:bg-red-600 py-3 rounded-lg">
+      {/* Logout */}
+      <div className="p-3 border-t border-slate-700">
+        <button
+          className={`flex items-center ${
+            open ? "justify-center gap-3" : "justify-center"
+          } w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg`}
+        >
           <FaSignOutAlt />
-          Logout
+          {open && <span>Logout</span>}
         </button>
       </div>
     </div>
