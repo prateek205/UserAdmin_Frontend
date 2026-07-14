@@ -38,10 +38,11 @@ export const postEmployee = (employeeData) => async (dispatch) => {
       `${BASE_URL}/createEmployee`,
       employeeData,
     );
+    console.log("NEW_DATA:",data)
 
     dispatch({
       type: "POST_EMPLOYEE_SUCCESS",
-      payload: data,
+      payload: data.employeeData,
     });
   } catch (error) {
     dispatch({

@@ -7,8 +7,8 @@ import { getEmployees, postEmployee } from "../redux/Action";
 const User = () => {
   const dispatch = useDispatch();
   const { Employee, loading } = useSelector((state) => state.employee);
-  console.log("EMPLOYEE:", Employee);
-  console.log(Array.isArray(Employee));
+  // console.log("EMPLOYEE:", Employee);
+  // console.log(Array.isArray(Employee));
   useEffect(() => {
     dispatch(getEmployees());
   }, [dispatch]);
@@ -19,9 +19,9 @@ const User = () => {
     FirstName: "",
     LastName: "",
     FullName: "",
-    Email: "",
-    Phone: "",
-    DOB: "",
+    EmailAddress: "",
+    PhoneNumber: "",
+    DateOfBirth: "",
     Age: "",
     Gender: "",
     Department: "",
@@ -50,6 +50,8 @@ const User = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(formData);
 
     dispatch(postEmployee(formData));
   };
@@ -89,128 +91,89 @@ const User = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-[2400px] w-full border-collapse">
-            <thead className="bg-gray-800 text-white sticky top-0">
-              <tr className="text-sm">
-                {[
-                  "User ID",
-                  "First Name",
-                  "Last Name",
-                  "Full Name",
-                  "Email",
-                  "Phone",
-                  "DOB",
-                  "Age",
-                  "Gender",
-                  "Department",
-                  "Designation",
-                  "Role",
-                  "Employee ID",
-                  "Joining Date",
-                  "Salary",
-                  "Work Location",
-                  "Address",
-                  "City",
-                  "State",
-                  "Country",
-                  "ZIP Code",
-                  "Status",
-                  "Actions",
-                ].map((item) => (
-                  <th
-                    key={item}
-                    className="px-5 py-4 whitespace-nowrap text-left font-semibold"
-                  >
-                    {item}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {Employee.map((user) => (
+          <div
+            key={user._id}
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 border overflow-hidden"
+          >
+            {/* Top */}
+            <div className="bg-gradient-to-r from-indigo-600 to-blue-500 p-5 text-white flex justify-between">
+              <div>
+                <h2 className="text-xl font-bold">{user.FullName}</h2>
+                <p className="text-sm opacity-90">{user.Designation}</p>
+              </div>
 
-            <tbody>
-              {Employee.map((user) => (
-                <tr
-                  key={user._id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="px-5 py-4">{user.UserID}</td>
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-semibold h-fit ${
+                  user.Status === "Active"
+                    ? "bg-green-400 text-white"
+                    : "bg-red-500 text-white"
+                }`}
+              >
+                {user.Status}
+              </span>
+            </div>
 
-                  <td className="px-5 py-4">{user.FirstName}</td>
+            {/* Body */}
+            <div className="p-5 space-y-3">
+              <div className="flex justify-between">
+                <span className="text-gray-500">Employee ID</span>
+                <span className="font-semibold">{user.EmployeeID}</span>
+              </div>
 
-                  <td className="px-5 py-4">{user.LastName}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Department</span>
+                <span>{user.Department}</span>
+              </div>
 
-                  <td className="px-5 py-4 font-medium">{user.FullName}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Role</span>
+                <span>{user.Role}</span>
+              </div>
 
-                  <td className="px-5 py-4">{user.EmailAddress}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Email</span>
+                <span className="text-right">{user.EmailAddress}</span>
+              </div>
 
-                  <td className="px-5 py-4">{user.PhoneNumber}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Phone</span>
+                <span>{user.PhoneNumber}</span>
+              </div>
 
-                  <td className="px-5 py-4">{user.DateOfBirth}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Salary</span>
+                <span className="font-bold text-green-600">
+                  ₹ {user.Salary}
+                </span>
+              </div>
 
-                  <td className="px-5 py-4">{user.Age}</td>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Location</span>
+                <span>{user.City}</span>
+              </div>
+            </div>
 
-                  <td className="px-5 py-4">{user.Gender}</td>
+            {/* Footer */}
+            <div className="border-t p-4 flex justify-around">
+              <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800">
+                <FaEye />
+                View
+              </button>
 
-                  <td className="px-5 py-4">{user.Department}</td>
+              <button className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700">
+                <FaEdit />
+                Edit
+              </button>
 
-                  <td className="px-5 py-4">{user.Designation}</td>
-
-                  <td className="px-5 py-4">{user.Role}</td>
-
-                  <td className="px-5 py-4">{user.EmployeeID}</td>
-
-                  <td className="px-5 py-4">{user.JoiningDate}</td>
-
-                  <td className="px-5 py-4 font-semibold text-green-600">
-                    {user.Salary}
-                  </td>
-
-                  <td className="px-5 py-4">{user.WorkLocation}</td>
-
-                  <td className="px-5 py-4">{user.Address}</td>
-
-                  <td className="px-5 py-4">{user.City}</td>
-
-                  <td className="px-5 py-4">{user.State}</td>
-
-                  <td className="px-5 py-4">{user.Country}</td>
-
-                  <td className="px-5 py-4">{user.ZIPCode}</td>
-
-                  <td className="px-5 py-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        user.Status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-600"
-                      }`}
-                    >
-                      {user.Status}
-                    </span>
-                  </td>
-
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <button className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">
-                        <FaEye />
-                      </button>
-
-                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded">
-                        <FaEdit />
-                      </button>
-
-                      <button className="bg-red-500 hover:bg-red-600 text-white p-2 rounded">
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              <button className="flex items-center gap-2 text-red-600 hover:text-red-700">
+                <FaTrash />
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
       {showModel && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -230,6 +193,9 @@ const User = () => {
                 <label className="block mb-2">First Name</label>
                 <input
                   type="text"
+                  name="FirstName"
+                  value={formData.FirstName}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -237,13 +203,29 @@ const User = () => {
                 <label className="block mb-2">Last Name</label>
                 <input
                   type="text"
+                  name="LastName"
+                  value={formData.LastName}
+                  onChange={handleChange}
+                  className="w-full border border-black rounded-md py-1 px-2"
+                />
+              </div>
+              <div>
+                <label className="block mb-2">Full Name</label>
+                <input
+                  type="text"
+                  name="FullName"
+                  value={formData.FullName}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
               <div>
                 <label className="block mb-2">Email ID</label>
                 <input
-                  type="text"
+                  type="email"
+                  name="EmailAddress"
+                  value={formData.EmailAddress}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -251,6 +233,9 @@ const User = () => {
                 <label className="block mb-2">Phone No.</label>
                 <input
                   type="tel"
+                  name="PhoneNumber"
+                  value={formData.PhoneNumber}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -258,6 +243,9 @@ const User = () => {
                 <label className="block mb-2">Date of Birth</label>
                 <input
                   type="date"
+                  name="DateOfBirth"
+                  value={formData.DateOfBirth}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -265,22 +253,33 @@ const User = () => {
                 <label className="block mb-2">Age</label>
                 <input
                   type="number"
+                  name="Age"
+                  value={formData.Age}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
               <div>
                 <label className="block mb-2">Gender</label>
-                <select className="w-full py-1 px-2 border border-black rounded-md">
-                  <option value="">Select Gender</option>
-                  <option value="">Male</option>
-                  <option value="">Female</option>
-                  <option value="">Other</option>
+                <select
+                  name="Gender"
+                  value={formData.Gender}
+                  onChange={handleChange}
+                  className="w-full py-1 px-2 border border-black rounded-md"
+                >
+                  <option>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div>
                 <label className="block mb-2">Department</label>
                 <input
                   type="text"
+                  name="Department"
+                  value={formData.Department}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -288,22 +287,33 @@ const User = () => {
                 <label className="block mb-2">Designation</label>
                 <input
                   type="text"
+                  name="Designation"
+                  value={formData.Designation}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
               <div>
                 <label className="block mb-2">Role</label>
-                <select className="w-full py-1 px-2 border border-black rounded-md">
-                  <option value="">Select Role</option>
-                  <option value="">Employee</option>
-                  <option value="">Manager</option>
-                  <option value="">Admin</option>
+                <select
+                  name="Role"
+                  value={formData.Role}
+                  onChange={handleChange}
+                  className="w-full py-1 px-2 border border-black rounded-md"
+                >
+                  <option>Select Role</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Admin">Admin</option>
                 </select>
               </div>
               <div>
                 <label className="block mb-2">Employee ID</label>
                 <input
                   type="text"
+                  name="EmployeeID"
+                  value={formData.EmployeeID}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -311,6 +321,9 @@ const User = () => {
                 <label className="block mb-2">Joining Date</label>
                 <input
                   type="date"
+                  name="JoiningDate"
+                  value={formData.JoiningDate}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -318,13 +331,19 @@ const User = () => {
                 <label className="block mb-2">Salary</label>
                 <input
                   type="number"
+                  name="Salary"
+                  value={formData.Salary}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
               <div>
                 <label className="block mb-2">Work Location</label>
                 <input
-                  type="date"
+                  type="text"
+                  name="WorkLocation"
+                  value={formData.WorkLocation}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -332,6 +351,9 @@ const User = () => {
                 <label className="block mb-2">City</label>
                 <input
                   type="text"
+                  name="City"
+                  value={formData.City}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -339,6 +361,9 @@ const User = () => {
                 <label className="block mb-2">State</label>
                 <input
                   type="text"
+                  name="State"
+                  value={formData.State}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
@@ -346,15 +371,23 @@ const User = () => {
                 <label className="block mb-2">ZIP Code</label>
                 <input
                   type="text"
+                  name="ZIPCode"
+                  value={formData.ZIPCode}
+                  onChange={handleChange}
                   className="w-full border border-black rounded-md py-1 px-2"
                 />
               </div>
               <div>
                 <label className="block mb-2">Status</label>
-                <select className="w-full py-1 px-2 border border-black rounded-md">
-                  <option value="">Select Status</option>
-                  <option value="">Active</option>
-                  <option value="">In-Active</option>
+                <select
+                  name="Status"
+                  value={formData.Status}
+                  onChange={handleChange}
+                  className="w-full py-1 px-2 border border-black rounded-md"
+                >
+                  <option>Select Status</option>
+                  <option value="Active">Active</option>
+                  <option value="InActive">In-Active</option>
                 </select>
               </div>
               <div>
@@ -364,28 +397,27 @@ const User = () => {
                   id=""
                   cols="100"
                   rows="3"
+                  name="Address"
+                  value={formData.Address}
+                  onChange={handleChange}
                   className="w-full py-1 px-2 border border-black rounded-md"
                 ></textarea>
               </div>
-              <div>
-                <label className="block mb-2">Profile Image</label>
-                <input type="file" />
+              <div className="flex items-center justify-end gap-5 p-2">
+                <button
+                  onClick={() => handleClose(false)}
+                  className="text-lg border border-black rounded-lg p-2 bg-gray-500 text-white hover:bg-red-500 hover:text-white cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="text-lg border border-black rounded-lg p-2 bg-blue-500 text-white hover:bg-green-500 hover:text-white cursor-pointer"
+                >
+                  Save Profile
+                </button>
               </div>
             </form>
-            <div className="flex items-center justify-end gap-5 p-2">
-              <button
-                onClick={() => handleClose(false)}
-                className="text-lg border border-black rounded-lg p-2 bg-gray-500 text-white hover:bg-red-500 hover:text-white cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="text-lg border border-black rounded-lg p-2 bg-blue-500 text-white hover:bg-green-500 hover:text-white cursor-pointer"
-              >
-                Save Profile
-              </button>
-            </div>
           </div>
         </div>
       )}
