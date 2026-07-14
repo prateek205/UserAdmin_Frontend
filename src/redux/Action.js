@@ -12,10 +12,11 @@ export const getEmployees = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(`${BASE_URL}/getEmployee`);
+    console.log("DATA:", data);
 
     dispatch({
       type: "GET_EMPLOYEE_SUCCESS",
-      payload: data,
+      payload: data.Employee,
     });
   } catch (error) {
     dispatch({

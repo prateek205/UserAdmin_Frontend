@@ -9,8 +9,7 @@ import {
 
 const initialState = {
   loading: false,
-  employee: [],
-  employee: null,
+  Employee: [],
   error: null,
 };
 
@@ -28,7 +27,7 @@ const employeeReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        employee: action.payload.Employee,
+        Employee: action.payload,
       };
 
     case "GET_EMPLOYEE_FAILED":

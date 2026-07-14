@@ -1,36 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaSearch, FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
-
-// const users = [
-//   {
-//     id: "#EMP001",
-//     image: "https://i.pravatar.cc/100?img=1",
-//     firstName: "John",
-//     lastName: "Doe",
-//     email: "john@example.com",
-//     phone: "+91 9876543210",
-//     dob: "12 Mar 1998",
-//     age: 27,
-//     gender: "Male",
-//     department: "Development",
-//     designation: "Frontend Developer",
-//     role: "Employee",
-//     employeeId: "EMP001",
-//     joiningDate: "10 Jan 2024",
-//     salary: "₹45,000",
-//     location: "Pune",
-//     address: "MG Road",
-//     city: "Pune",
-//     state: "Maharashtra",
-//     country: "India",
-//     zip: "411001",
-//     status: "Active",
-//   },
-// ];
+import { useDispatch, useSelector } from "react-redux";
+import { getEmployees, postEmployee } from "../redux/Action";
 
 const User = () => {
+  const dispatch = useDispatch();
+  const { Employee, loading } = useSelector((state) => state.employee);
+  console.log("EMPLOYEE:", Employee);
+  console.log(Array.isArray(Employee));
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, [dispatch]);
+
   const [showModel, setShowModel] = useState(false);
+  const [formData, setFormData] = useState({
+    UserID: "",
+    FirstName: "",
+    LastName: "",
+    FullName: "",
+    Email: "",
+    Phone: "",
+    DOB: "",
+    Age: "",
+    Gender: "",
+    Department: "",
+    Designation: "",
+    Role: "",
+    EmployeeID: "",
+    JoiningDate: "",
+    Salary: "",
+    WorkLocation: "",
+    Address: "",
+    City: "",
+    State: "",
+    Country: "",
+    ZIPCode: "",
+    Status: "",
+    Actions: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(postEmployee(formData));
+  };
 
   const handleOpen = () => {
     setShowModel(true);
@@ -74,7 +96,6 @@ const User = () => {
               <tr className="text-sm">
                 {[
                   "User ID",
-                  "Profile",
                   "First Name",
                   "Last Name",
                   "Full Name",
@@ -108,75 +129,65 @@ const User = () => {
               </tr>
             </thead>
 
-            {/* <tbody>
-              {users.map((user) => (
+            <tbody>
+              {Employee.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="border-b hover:bg-gray-50 transition"
                 >
-                  <td className="px-5 py-4">{user.id}</td>
+                  <td className="px-5 py-4">{user.UserID}</td>
 
-                  <td className="px-5 py-4">
-                    <img
-                      src={user.image}
-                      alt=""
-                      className="w-12 h-12 rounded-full object-cover border"
-                    />
-                  </td>
+                  <td className="px-5 py-4">{user.FirstName}</td>
 
-                  <td className="px-5 py-4">{user.firstName}</td>
+                  <td className="px-5 py-4">{user.LastName}</td>
 
-                  <td className="px-5 py-4">{user.lastName}</td>
+                  <td className="px-5 py-4 font-medium">{user.FullName}</td>
 
-                  <td className="px-5 py-4 font-medium">
-                    {user.firstName} {user.lastName}
-                  </td>
+                  <td className="px-5 py-4">{user.EmailAddress}</td>
 
-                  <td className="px-5 py-4">{user.email}</td>
+                  <td className="px-5 py-4">{user.PhoneNumber}</td>
 
-                  <td className="px-5 py-4">{user.phone}</td>
+                  <td className="px-5 py-4">{user.DateOfBirth}</td>
 
-                  <td className="px-5 py-4">{user.dob}</td>
+                  <td className="px-5 py-4">{user.Age}</td>
 
-                  <td className="px-5 py-4">{user.age}</td>
+                  <td className="px-5 py-4">{user.Gender}</td>
 
-                  <td className="px-5 py-4">{user.gender}</td>
+                  <td className="px-5 py-4">{user.Department}</td>
 
-                  <td className="px-5 py-4">{user.department}</td>
+                  <td className="px-5 py-4">{user.Designation}</td>
 
-                  <td className="px-5 py-4">{user.designation}</td>
+                  <td className="px-5 py-4">{user.Role}</td>
 
-                  <td className="px-5 py-4">{user.role}</td>
+                  <td className="px-5 py-4">{user.EmployeeID}</td>
 
-                  <td className="px-5 py-4">{user.employeeId}</td>
-
-                  <td className="px-5 py-4">{user.joiningDate}</td>
+                  <td className="px-5 py-4">{user.JoiningDate}</td>
 
                   <td className="px-5 py-4 font-semibold text-green-600">
-                    {user.salary}
+                    {user.Salary}
                   </td>
 
-                  <td className="px-5 py-4">{user.location}</td>
+                  <td className="px-5 py-4">{user.WorkLocation}</td>
 
-                  <td className="px-5 py-4">{user.address}</td>
+                  <td className="px-5 py-4">{user.Address}</td>
 
-                  <td className="px-5 py-4">{user.city}</td>
+                  <td className="px-5 py-4">{user.City}</td>
 
-                  <td className="px-5 py-4">{user.state}</td>
+                  <td className="px-5 py-4">{user.State}</td>
 
-                  <td className="px-5 py-4">{user.country}</td>
+                  <td className="px-5 py-4">{user.Country}</td>
 
-                  <td className="px-5 py-4">{user.zip}</td>
+                  <td className="px-5 py-4">{user.ZIPCode}</td>
 
                   <td className="px-5 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        user.status === "Active"
+                        user.Status === "Active"
                           ? "bg-green-100 text-green-700"
                           : "bg-red-100 text-red-600"
                       }`}
                     >
-                      {user.status}
+                      {user.Status}
                     </span>
                   </td>
 
@@ -197,7 +208,7 @@ const User = () => {
                   </td>
                 </tr>
               ))}
-            </tbody> */}
+            </tbody>
           </table>
         </div>
       </div>
@@ -214,7 +225,7 @@ const User = () => {
                 X{" "}
               </button>
             </div>
-            <form className="grid grid-cols-3 gap-2">
+            <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-2">
               <div>
                 <label className="block mb-2">First Name</label>
                 <input

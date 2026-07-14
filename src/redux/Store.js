@@ -1,8 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import {thunk} from 'react-redux'
+import {thunk} from 'redux-thunk'
+import employeeReducer from './Reducer';
 
 const rootReducer = combineReducers({
-    employee = employeeReducer
+    employee : employeeReducer
 })
 
 const store = createStore(
