@@ -3,6 +3,8 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_FAILED,
   POST_EMPLOYEE_REQUEST,
+  POST_EMPLOYEE_SUCCESS,
+  POST_EMPLOYEE_FAILED,
 } from "./EmployeeTypes";
 
 const initialState = {
@@ -59,7 +61,7 @@ const employeeReducer = (state = initialState, action) => {
       };
 
     default:
-    return state;
+      return state;
   }
 };
 
