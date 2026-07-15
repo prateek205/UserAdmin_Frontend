@@ -177,7 +177,9 @@ const User = () => {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-white rounded-lg max-w-6xl w-[150vh] h-[96vh] p-8 mb-2 overflow-y-auto flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold capitalize">add new user</h1>
+              <h1 className="text-2xl font-bold capitalize">
+                add new employee
+              </h1>
               <button
                 onClick={() => handleClose(false)}
                 className="font-bold text-xl text-gray-400"
@@ -185,243 +187,320 @@ const User = () => {
                 X
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-2">
-              <div>
-                <label className="block mb-2">UserID</label>
-                <input
-                  type="text"
-                  name="FirstName"
-                  value={formData.UserID}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Personal Information */}
+              <div className="bg-gray-50 rounded-xl shadow-sm border p-5">
+                <h2 className="text-lg font-semibold border-b pb-2 mb-4 text-blue-600">
+                  Personal Information
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* User ID */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">User ID</label>
+                    <input
+                      label="User ID"
+                      name="UserID"
+                      value={formData.UserID}
+                      onChange={handleChange}
+                      placeholder="User ID"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">First Name</label>
+                    <input
+                      label="First Name"
+                      name="FirstName"
+                      value={formData.FirstName}
+                      onChange={handleChange}
+                      placeholder="First Name"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Last Name</label>
+                    <input
+                      label="Last Name"
+                      name="LastName"
+                      value={formData.LastName}
+                      onChange={handleChange}
+                      placeholder="Last Name"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Full Name</label>
+                    <input
+                      label="Full Name"
+                      name="FullName"
+                      value={formData.FullName}
+                      onChange={handleChange}
+                      placeholder="Full Name"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Email ID</label>
+                    <input
+                      type="email"
+                      label="Email"
+                      name="EmailAddress"
+                      value={formData.EmailAddress}
+                      onChange={handleChange}
+                      placeholder="Email Address"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Contact No.</label>
+                    <input
+                      label="Phone Number"
+                      name="PhoneNumber"
+                      value={formData.PhoneNumber}
+                      onChange={handleChange}
+                      placeholder="Contact No."
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Date of Birth</label>
+                    <input
+                      type="date"
+                      label="Date Of Birth"
+                      name="DateOfBirth"
+                      value={formData.DateOfBirth}
+                      onChange={handleChange}
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Age</label>
+                    <input
+                      type="number"
+                      label="Age"
+                      name="Age"
+                      value={formData.Age}
+                      onChange={handleChange}
+                      placeholder="Age"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Gender</label>
+                    <select
+                      label="Gender"
+                      name="Gender"
+                      value={formData.Gender}
+                      onChange={handleChange}
+                      placeholder="UserID"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    >
+                      <option value="">Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="block mb-2">First Name</label>
-                <input
-                  type="text"
-                  name="FirstName"
-                  value={formData.FirstName}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
+
+              {/* Employment */}
+              <div className="bg-gray-50 rounded-xl shadow-sm border p-5">
+                <h2 className="text-lg font-semibold border-b pb-2 mb-4 text-green-600">
+                  Employment Details
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Employee ID</label>
+                    <input
+                      label="Employee ID"
+                      name="EmployeeID"
+                      value={formData.EmployeeID}
+                      onChange={handleChange}
+                      placeholder="EmployeeID"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Department</label>
+                    <input
+                      label="Department"
+                      name="Department"
+                      value={formData.Department}
+                      onChange={handleChange}
+                      placeholder="Department"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Designation</label>
+                    <input
+                      label="Designation"
+                      name="Designation"
+                      value={formData.Designation}
+                      onChange={handleChange}
+                      placeholder="Designation"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Role</label>
+                    <select
+                      label="Role"
+                      name="Role"
+                      value={formData.Role}
+                      onChange={handleChange}
+                      placeholder="UserID"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    >
+                      <option value="Role">Select Role</option>
+                      <option value="Employee">Employee</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Admin">Admin</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Joining Date</label>
+                    <input
+                      type="date"
+                      label="Joining Date"
+                      name="JoiningDate"
+                      value={formData.JoiningDate}
+                      onChange={handleChange}
+                      placeholder="UserID"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Salary</label>
+                    <input
+                      type="number"
+                      label="Salary"
+                      name="Salary"
+                      value={formData.Salary}
+                      onChange={handleChange}
+                      placeholder="Salary"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Work Location</label>
+                    <input
+                      label="Work Location"
+                      name="WorkLocation"
+                      value={formData.WorkLocation}
+                      onChange={handleChange}
+                      placeholder="Work Location"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">Status</label>
+                    <select
+                      label="Status"
+                      name="Status"
+                      value={formData.Status}
+                      onChange={handleChange}
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    >
+                      <option value="status">Status</option>
+                      <option value="Active">Active</option>
+                      <option value="InActive">InActive</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="block mb-2">Last Name</label>
-                <input
-                  type="text"
-                  name="LastName"
-                  value={formData.LastName}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
+
+              {/* Address */}
+              <div className="bg-gray-50 rounded-xl shadow-sm border p-5">
+                <h2 className="text-lg font-semibold border-b pb-2 mb-4 text-purple-600">
+                  Address Information
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="md:col-span-3">
+                    <label className="text-sm font-medium">Address</label>
+
+                    <textarea
+                      rows="4"
+                      name="Address"
+                      value={formData.Address}
+                      onChange={handleChange}
+                      placeholder="Address"
+                      className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">City</label>
+                    <input
+                      label="City"
+                      name="City"
+                      value={formData.City}
+                      onChange={handleChange}
+                      placeholder="City"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">State</label>
+                    <input
+                      label="State"
+                      name="State"
+                      value={formData.State}
+                      onChange={handleChange}
+                      placeholder="State"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium">ZIP-Code</label>
+                    <input
+                      label="ZIP Code"
+                      name="ZIPCode"
+                      value={formData.ZIPCode}
+                      onChange={handleChange}
+                      placeholder="ZIPCode"
+                      className="border-2 border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="block mb-2">Full Name</label>
-                <input
-                  type="text"
-                  name="FullName"
-                  value={formData.FullName}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Email ID</label>
-                <input
-                  type="email"
-                  name="EmailAddress"
-                  value={formData.EmailAddress}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Phone No.</label>
-                <input
-                  type="tel"
-                  name="PhoneNumber"
-                  value={formData.PhoneNumber}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Date of Birth</label>
-                <input
-                  type="date"
-                  name="DateOfBirth"
-                  value={formData.DateOfBirth}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Age</label>
-                <input
-                  type="number"
-                  name="Age"
-                  value={formData.Age}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Gender</label>
-                <select
-                  name="Gender"
-                  value={formData.Gender}
-                  onChange={handleChange}
-                  className="w-full py-1 px-2 border border-black rounded-md"
-                >
-                  <option>Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label className="block mb-2">Department</label>
-                <input
-                  type="text"
-                  name="Department"
-                  value={formData.Department}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Designation</label>
-                <input
-                  type="text"
-                  name="Designation"
-                  value={formData.Designation}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Role</label>
-                <select
-                  name="Role"
-                  value={formData.Role}
-                  onChange={handleChange}
-                  className="w-full py-1 px-2 border border-black rounded-md"
-                >
-                  <option>Select Role</option>
-                  <option value="Employee">Employee</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Admin">Admin</option>
-                </select>
-              </div>
-              <div>
-                <label className="block mb-2">Employee ID</label>
-                <input
-                  type="text"
-                  name="EmployeeID"
-                  value={formData.EmployeeID}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Joining Date</label>
-                <input
-                  type="date"
-                  name="JoiningDate"
-                  value={formData.JoiningDate}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Salary</label>
-                <input
-                  type="number"
-                  name="Salary"
-                  value={formData.Salary}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Work Location</label>
-                <input
-                  type="text"
-                  name="WorkLocation"
-                  value={formData.WorkLocation}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">City</label>
-                <input
-                  type="text"
-                  name="City"
-                  value={formData.City}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">State</label>
-                <input
-                  type="text"
-                  name="State"
-                  value={formData.State}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">ZIP Code</label>
-                <input
-                  type="text"
-                  name="ZIPCode"
-                  value={formData.ZIPCode}
-                  onChange={handleChange}
-                  className="w-full border border-black rounded-md py-1 px-2"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Status</label>
-                <select
-                  name="Status"
-                  value={formData.Status}
-                  onChange={handleChange}
-                  className="w-full py-1 px-2 border border-black rounded-md"
-                >
-                  <option>Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="InActive">In-Active</option>
-                </select>
-              </div>
-              <div>
-                <label className="block mb-2">Address</label>
-                <textarea
-                  name=""
-                  id=""
-                  cols="100"
-                  rows="3"
-                  name="Address"
-                  value={formData.Address}
-                  onChange={handleChange}
-                  className="w-full py-1 px-2 border border-black rounded-md"
-                ></textarea>
-              </div>
-              <div className="flex items-center justify-end gap-5 p-2">
+
+              {/* Buttons */}
+
+              <div className="flex justify-end gap-4">
                 <button
+                  type="button"
                   onClick={() => handleClose(false)}
-                  className="text-lg border border-black rounded-lg p-2 bg-gray-500 text-white hover:bg-red-500 hover:text-white cursor-pointer"
+                  className="px-6 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
                 >
                   Cancel
                 </button>
+
                 <button
                   type="submit"
-                  className="text-lg border border-black rounded-lg p-2 bg-blue-500 text-white hover:bg-green-500 hover:text-white cursor-pointer"
+                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
                 >
-                  Save Profile
+                  Save Employee
                 </button>
               </div>
             </form>
