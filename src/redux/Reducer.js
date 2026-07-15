@@ -59,6 +59,45 @@ const employeeReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+    // Update Employee
+    case "UPDATE_EMPLOYEE_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "UPDATE_EMPLOYEE_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        employee: action.payload.employee,
+      };
+
+    case "UPDATE_EMPLOYEE_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case "DELETE_EMPLOYEE_REQUEST":
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case "DELETE_EMPLOYEE_SUCCESS":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "DELETE_EMPLOYEE_FAILED":
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

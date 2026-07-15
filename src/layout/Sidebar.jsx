@@ -27,16 +27,16 @@ const Sidebar = () => {
     >
       {/* Header */}
       <div className="h-20 flex items-center justify-between px-5 border-b border-slate-700">
-        {open && (
-          <h1 className="text-xl font-bold whitespace-nowrap">Admin Panel</h1>
-        )}
-
         <button
           onClick={() => setOpen(!open)}
           className="text-2xl hover:text-indigo-400"
         >
           {open ? <FaTimes /> : <FaBars />}
         </button>
+
+        {open && (
+          <h1 className="text-xl font-bold whitespace-nowrap">Admin Panel</h1>
+        )}
       </div>
 
       <div className="flex-1 p-3 space-y-2">

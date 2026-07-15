@@ -2,18 +2,25 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaSearch, FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployees, postEmployee } from "../redux/Action";
+import {
+  deleteEmployee,
+  getEmployees,
+  postEmployee,
+  updateEmployee,
+} from "../redux/Action";
 
 const User = () => {
   const dispatch = useDispatch();
   const { Employee, loading } = useSelector((state) => state.employee);
-  // console.log("EMPLOYEE:", Employee);
-  // console.log(Array.isArray(Employee));
   useEffect(() => {
     dispatch(getEmployees());
   }, [dispatch]);
 
   const [showModel, setShowModel] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isView, setIsView] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
   const [formData, setFormData] = useState({
     UserID: "",
     FirstName: "",
@@ -51,12 +58,47 @@ const User = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
-    dispatch(postEmployee(formData));
+    if (isEdit) {
+      dispatch(updateEmployee(selectedId, formData));
+    } else {
+      dispatch(postEmployee(formData));
+    }
+    setShowModel(false);
   };
 
   const handleOpen = () => {
+    setIsEdit(false);
+
+    setIsView(false);
+
+    setSelectedId(null);
+
+    setFormData({
+      UserID: "",
+      FirstName: "",
+      LastName: "",
+      FullName: "",
+      EmailAddress: "",
+      PhoneNumber: "",
+      DateOfBirth: "",
+      Age: "",
+      Gender: "",
+      Department: "",
+      Designation: "",
+      Role: "",
+      EmployeeID: "",
+      JoiningDate: "",
+      Salary: "",
+      WorkLocation: "",
+      Address: "",
+      City: "",
+      State: "",
+      Country: "",
+      ZIPCode: "",
+      Status: "",
+      Actions: "",
+    });
+
     setShowModel(true);
   };
 
@@ -64,8 +106,31 @@ const User = () => {
     setShowModel(false);
   };
 
+  const handleEdit = (employee) => {
+    setIsEdit(true);
+    setIsView(false);
+    setSelectedId(employee._id);
+    setFormData(employee);
+    setShowModel(true);
+  };
+
+  const handleView = (employee) => {
+    setIsEdit(false);
+    setIsView(true);
+    setSelectedId(employee._id);
+    setFormData(employee);
+    setShowModel(true);
+  };
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Are you sure");
+    if (confirmDelete) {
+      dispatch(deleteEmployee(id));
+    }
+  };
+
   return (
-    <section className="p-6 bg-gray-100 min-h-screen">
+    <section className="p-6 bg-gray-100 h-screen">
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">User Management</h1>
@@ -73,7 +138,7 @@ const User = () => {
         </div>
 
         <button
-          onClick={() => handleOpen(true)}
+          onClick={handleOpen}
           className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-full transition"
         >
           <FaPlus />
@@ -155,17 +220,26 @@ const User = () => {
 
             {/* Footer */}
             <div className="border-t p-4 flex justify-around">
-              <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800">
+              <button
+                onClick={() => handleView(user)}
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+              >
                 <FaEye />
                 View
               </button>
 
-              <button className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700">
+              <button
+                onClick={() => handleEdit(user)}
+                className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700"
+              >
                 <FaEdit />
                 Edit
               </button>
 
-              <button className="flex items-center gap-2 text-red-600 hover:text-red-700">
+              <button
+                onClick={() => handleDelete(user._id)}
+                className="flex items-center gap-2 text-red-600 hover:text-red-700"
+              >
                 <FaTrash />
                 Delete
               </button>
@@ -174,8 +248,14 @@ const User = () => {
         ))}
       </div>
       {showModel && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg max-w-6xl w-[150vh] h-[96vh] p-8 mb-2 overflow-y-auto flex flex-col gap-2">
+        <div
+          onClick={handleClose}
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+        >
+          <div
+            className="bg-white rounded-lg max-w-6xl w-[150vh] h-[96vh] p-8 mb-2 overflow-y-auto flex flex-col gap-2"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold capitalize">
                 add new employee
@@ -205,6 +285,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="User ID"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -217,6 +298,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="First Name"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -229,6 +311,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Last Name"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -241,6 +324,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Full Name"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -254,6 +338,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Email Address"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -266,6 +351,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Contact No."
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -275,9 +361,14 @@ const User = () => {
                       type="date"
                       label="Date Of Birth"
                       name="DateOfBirth"
-                      value={formData.DateOfBirth}
+                      value={
+                        formData.DateOfBirth
+                          ? formData.DateOfBirth.split("T")[0]
+                          : ""
+                      }
                       onChange={handleChange}
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -291,6 +382,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Age"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -303,6 +395,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="UserID"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     >
                       <option value="">Gender</option>
                       <option value="male">Male</option>
@@ -328,6 +421,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="EmployeeID"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -340,6 +434,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Department"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -352,6 +447,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Designation"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -364,6 +460,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="UserID"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     >
                       <option value="Role">Select Role</option>
                       <option value="Employee">Employee</option>
@@ -378,10 +475,15 @@ const User = () => {
                       type="date"
                       label="Joining Date"
                       name="JoiningDate"
-                      value={formData.JoiningDate}
+                      value={
+                        formData.JoiningDate
+                          ? formData.JoiningDate.split("T")[0]
+                          : ""
+                      }
                       onChange={handleChange}
                       placeholder="UserID"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -395,6 +497,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Salary"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -407,6 +510,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Work Location"
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     />
                   </div>
 
@@ -418,6 +522,7 @@ const User = () => {
                       value={formData.Status}
                       onChange={handleChange}
                       className="border-2 border-gray-300 rounded-md p-2"
+                      disabled={isView}
                     >
                       <option value="status">Status</option>
                       <option value="Active">Active</option>
@@ -444,6 +549,7 @@ const User = () => {
                       onChange={handleChange}
                       placeholder="Address"
                       className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                      disabled={isView}
                     />
                   </div>
 
@@ -500,7 +606,7 @@ const User = () => {
                   type="submit"
                   className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
                 >
-                  Save Employee
+                  {isEdit ? "Update Employee" : "Save Employee"}
                 </button>
               </div>
             </form>
