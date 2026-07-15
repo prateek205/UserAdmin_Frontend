@@ -118,7 +118,7 @@ const User = () => {
             {/* Body */}
             <div className="p-5 space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-500">Employee ID</span>
+                <span className="text-gray-500">Employee-ID</span>
                 <span className="font-semibold">{user.EmployeeID}</span>
               </div>
 
@@ -144,9 +144,7 @@ const User = () => {
 
               <div className="flex justify-between">
                 <span className="text-gray-500">Salary</span>
-                <span className="font-bold text-green-600">
-                  ₹ {user.Salary}
-                </span>
+                <span className="font-bold text-green-600">₹{user.Salary}</span>
               </div>
 
               <div className="flex justify-between">
@@ -184,11 +182,20 @@ const User = () => {
                 onClick={() => handleClose(false)}
                 className="font-bold text-xl text-gray-400"
               >
-                {" "}
-                X{" "}
+                X
               </button>
             </div>
             <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-2">
+              <div>
+                <label className="block mb-2">UserID</label>
+                <input
+                  type="text"
+                  name="FirstName"
+                  value={formData.UserID}
+                  onChange={handleChange}
+                  className="w-full border border-black rounded-md py-1 px-2"
+                />
+              </div>
               <div>
                 <label className="block mb-2">First Name</label>
                 <input
