@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   loading: false,
-  Employee: [],
+  employees: [],
   error: null,
 };
 
@@ -27,7 +27,7 @@ const employeeReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        Employee: action.payload,
+        employees: action.payload,
       };
 
     case "GET_EMPLOYEE_FAILED":
@@ -42,14 +42,14 @@ const employeeReducer = (state = initialState, action) => {
     case "POST_EMPLOYEE_REQUEST":
       return {
         ...state,
-        loading: false,
+        loading: true,
       };
 
     case "POST_EMPLOYEE_SUCCESS":
       return {
         ...state,
         loading: false,
-        employee: action.payload.newEmployee,
+        employees: [action.payload, ...state.employees],
       };
 
     case "POST_EMPLOYEE_FAILED":
@@ -70,7 +70,7 @@ const employeeReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        employee: action.payload.employee,
+        employee: action.payload,
       };
 
     case "UPDATE_EMPLOYEE_FAILED":

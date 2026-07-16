@@ -11,15 +11,21 @@ import {
 
 const User = () => {
   const dispatch = useDispatch();
-  const { Employee, loading } = useSelector((state) => state.employee);
-  useEffect(() => {
-    dispatch(getEmployees());
-  }, [dispatch]);
+  const { employees, loading } = useSelector((state) => state.employee);
 
   const [showModel, setShowModel] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isView, setIsView] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+
+  const [role, setRole] = useState("");
+  const [sort, setSort] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    dispatch(getEmployees(role, sort, search));
+  }, [dispatch, role, sort, search]);
 
   const [formData, setFormData] = useState({
     UserID: "",
@@ -53,6 +59,7 @@ const User = () => {
       ...formData,
       [name]: value,
     });
+    setIsDisable(true);
   };
 
   const handleSubmit = (e) => {
@@ -112,6 +119,7 @@ const User = () => {
     setSelectedId(employee._id);
     setFormData(employee);
     setShowModel(true);
+    setIsDisable(false);
   };
 
   const handleView = (employee) => {
@@ -130,7 +138,7 @@ const User = () => {
   };
 
   return (
-    <section className="p-6 bg-gray-100 h-screen">
+    <section className=" bg-gray-100 h-screen">
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">User Management</h1>
@@ -145,19 +153,50 @@ const User = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-4 mb-5">
+      <div className="bg-white rounded-xl shadow-sm p-2 mb-5 flex items-center gap-5">
         <div className="relative max-w-md">
           <FaSearch className="absolute top-4 left-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search users..."
-            className="w-full pl-11 pr-4 py-3 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Search employee"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            className="w-96 pl-11 pr-4 py-3 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
           />
+        </div>
+        <div>
+          <select
+            value={role}
+            onChange={(e) => {
+              setRole(e.target.value);
+            }}
+            className="border border-gray-300 text-gray-400 focus:ring-indigo-500 w-[200px] py-3 pl-0 px-3 rounded-lg"
+          >
+            <option value="">All Roles</option>
+            <option value="Employee">Employee</option>
+            <option value="Manager">Manager</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <div>
+          <select
+            value={sort}
+            onChange={(e) => {
+              setSort(e.target.value);
+            }}
+            className="border border-gray-300 text-gray-400 focus:ring-indigo-500 w-[200px] py-3 pl-0 px-3 rounded-lg"
+          >
+            <option value="">Salary</option>
+            <option value="salary-high">Salary: High to Low</option>
+            <option value="salary-low">Salary: Low to High</option>
+          </select>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {Employee.map((user) => (
+        {employees.map((user) => (
           <div
             key={user._id}
             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 border overflow-hidden"
@@ -604,9 +643,20 @@ const User = () => {
 
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                  disabled={isEdit && !isDisable}
+                  className={`px-6 py-2 rounded-lg bg-blue-600 text-white 
+                  ${
+                    isEdit && !isDisable
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "hover:bg-blue-700"
+                  }
+                  `}
                 >
-                  {isEdit ? "Update Employee" : "Save Employee"}
+                  {isView
+                    ? "Employee Details"
+                    : isEdit
+                      ? "Update Employee"
+                      : "Save Employee"}
                 </button>
               </div>
             </form>

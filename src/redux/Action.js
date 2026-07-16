@@ -5,30 +5,38 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 // GET_EMPLOYEE_DATA
 
-export const getEmployees = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: "GET_EMPLOYEE_REQUEST",
-    });
+export const getEmployees =
+  (role = "", sort = "",search="") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: "GET_EMPLOYEE_REQUEST",
+      });
 
-    const { data } = await axios.get(`${BASE_URL}/getEmployee`);
-    console.log("DATA:", data);
+      const { data } = await axios.get(`${BASE_URL}/getEmployee`, {
+        params: {
+          role,
+          sort,
+          search,
+        },
+      });
+      // console.log("DATA:", data);
 
-    dispatch({
-      type: "GET_EMPLOYEE_SUCCESS",
-      payload: data.Employee,
-    });
-  } catch (error) {
-    dispatch({
-      type: "GET_EMPLOYEE_FAILED",
-      payload: error.response?.data?.message,
-    });
-  }
-};
+      dispatch({
+        type: "GET_EMPLOYEE_SUCCESS",
+        payload: data.Employee,
+      });
+    } catch (error) {
+      dispatch({
+        type: "GET_EMPLOYEE_FAILED",
+        payload: error.response?.data?.message,
+      });
+    }
+  };
 
 // POST_EMPLOYEE_DATA
 
-export const postEmployee = (employeeData) => async (dispatch) => {
+export const postEmployee = (newEmployee) => async (dispatch) => {
   try {
     dispatch({
       type: "POST_EMPLOYEE_REQUEST",
@@ -36,14 +44,17 @@ export const postEmployee = (employeeData) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${BASE_URL}/createEmployee`,
-      employeeData,
+      newEmployee,
     );
-    console.log("NEW_DATA:", data);
+    // console.log("NEW_DATA:", data);
 
     dispatch({
       type: "POST_EMPLOYEE_SUCCESS",
-      payload: data.employeeData,
+      payload: data.newEmployee,
     });
+
+    dispatch(getEmployees())
+
   } catch (error) {
     dispatch({
       type: "POST_EMPLOYEE_FAILED",
