@@ -1,12 +1,25 @@
 import axios from "axios";
-import { GET_EMPLOYEE_REQUEST } from "./EmployeeTypes";
+import {
+  GET_EMPLOYEE_REQUEST,
+  GET_EMPLOYEE_SUCCESS,
+  GET_EMPLOYEE_FAILED,
+  POST_EMPLOYEE_REQUEST,
+  POST_EMPLOYEE_SUCCESS,
+  POST_EMPLOYEE_FAILED,
+  UPDATE_EMPLOYEE_REQUEST,
+  UPDATE_EMPLOYEE_SUCCESS,
+  UPDATE_EMPLOYEE_FAILED,
+  DELETE_EMPLOYEE_REQUEST,
+  DELETE_EMPLOYEE_SUCCESS,
+  DELETE_EMPLOYEE_FAILED,
+} from "./EmployeeTypes";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 // GET_EMPLOYEE_DATA
 
 export const getEmployees =
-  (role = "", sort = "",search="") =>
+  (role = "", sort = "", search = "") =>
   async (dispatch) => {
     try {
       dispatch({
@@ -53,8 +66,7 @@ export const postEmployee = (newEmployee) => async (dispatch) => {
       payload: data.newEmployee,
     });
 
-    dispatch(getEmployees())
-
+    dispatch(getEmployees());
   } catch (error) {
     dispatch({
       type: "POST_EMPLOYEE_FAILED",
